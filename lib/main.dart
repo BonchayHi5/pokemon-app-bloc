@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon_app/ui/screen/home/home_screen.dart';
+import 'package:pokemon_app/ui/screen/home_screen.dart';
 
 void main() {
   runApp(const MyApp());

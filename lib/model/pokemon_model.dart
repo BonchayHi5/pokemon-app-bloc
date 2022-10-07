@@ -15,12 +15,38 @@ import 'dart:convert';
 	// 		- Pokemon Id
 	// 		- Pokemon Type
 
-List<PokemonListModel> pokemonListModelFromJson(String str) => List<PokemonListModel>.from(json.decode(str).map((x) => PokemonListModel.fromJson(x)));
 
-String pokemonListModelToJson(List<PokemonListModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class PokemonListModel {
-    PokemonListModel({
+
+// const colours = {
+// 	normal: '#A8A77A',
+// 	fire: '#EE8130',
+// 	water: '#6390F0',
+// 	electric: '#F7D02C',
+// 	grass: '#7AC74C',
+// 	ice: '#96D9D6',
+// 	fighting: '#C22E28',
+// 	poison: '#A33EA1',
+// 	ground: '#E2BF65',
+// 	flying: '#A98FF3',
+// 	psychic: '#F95587',
+// 	bug: '#A6B91A',
+// 	rock: '#B6A136',
+// 	ghost: '#735797',
+// 	dragon: '#6F35FC',
+// 	dark: '#705746',
+// 	steel: '#B7B7CE',
+// 	fairy: '#D685AD',
+// };
+// }
+
+
+List<PokemonModel> pokemonListModelFromJson(String str) => List<PokemonModel>.from(json.decode(str).map((x) => PokemonModel.fromJson(x)));
+
+String pokemonListModelToJson(List<PokemonModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class PokemonModel {
+    PokemonModel({
       required this.name,
       required this.id,
       required this.imageurl,
@@ -34,6 +60,7 @@ class PokemonListModel {
       required this.attack,
       required this.defense,
       required this.speed,
+        this.isFav = false,
         this.weaknesses,
         this.evolutions,
         this.abilities,
@@ -68,6 +95,7 @@ class PokemonListModel {
     final int? specialAttack;
     final int? specialDefense;
     final int speed;
+    bool isFav;
     final int? total;
     final String? malePercentage;
     final String? femalePercentage;
@@ -78,7 +106,7 @@ class PokemonListModel {
     final String? reason;
     final String? baseExp;
 
-    factory PokemonListModel.fromJson(Map<String, dynamic> json) => PokemonListModel(
+    factory PokemonModel.fromJson(Map<String, dynamic> json) => PokemonModel(
         name: json["name"],
         id: json["id"],
         imageurl: json["imageurl"],
