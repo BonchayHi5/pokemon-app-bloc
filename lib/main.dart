@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemon_app/blocs/pokemon/pokemon_bloc.dart';
+import 'package:pokemon_app/blocs/search_pokemon/search_pokemon_bloc.dart';
 import 'package:pokemon_app/ui/screen/home_screen.dart';
 
 void main() {
@@ -10,9 +13,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Pokemon App',
-      home: HomeScreen(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<PokemonBloc>(
+          create: (BuildContext context) => PokemonBloc()..add(FetchPokemonEvent()),
+        ),
+        BlocProvider<SearchPokemonBloc>(
+          create: (BuildContext context) => SearchPokemonBloc(),
+        ),
+      ],
+      child: const MaterialApp(
+        title: 'Pokemon App',
+        home: HomeScreen(),
+      ),
     );
   }
 }

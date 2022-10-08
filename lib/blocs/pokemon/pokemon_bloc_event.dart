@@ -9,7 +9,3 @@ abstract class PokemonBlocEvent extends Equatable {
 }
 
 class FetchPokemonEvent extends PokemonBlocEvent {}
-class SearchPokemonEvent extends PokemonBlocEvent {
-  final String queryText;
-  const SearchPokemonEvent({required this.queryText});
-}
