@@ -16,16 +16,17 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           centerTitle: false,
-          title: const Text("Pokemon App",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700)),
+          title: const Text("Pokemon App",style:TextStyle(color: Colors.black, fontWeight: FontWeight.w700)),
         ),
         body: BlocBuilder<PokemonBloc, PokemonBlocState>(
           builder: (context, state) {
             if (state is PokemonBlocLoadingState) {
               return const Center(
-                child: CircularProgressIndicator(color: Colors.black,),
+                child: CircularProgressIndicator(
+                  color: Colors.black,
+                ),
               );
             }
-
             if (state is PokemonBlocErrorState) {
               return Center(
                 child: Text(
@@ -34,7 +35,6 @@ class HomeScreen extends StatelessWidget {
                 ),
               );
             }
-
             if (state is PokemonBlocSuccessState) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -53,8 +53,7 @@ class HomeScreen extends StatelessWidget {
                         itemBuilder: (BuildContext ctx, index) {
                           final pokemon = state.pokemonList[index];
                           return PokemonCard(pokemon: pokemon);
-                        }
-                      ),
+                        }),
                     ),
                   ],
                 ),

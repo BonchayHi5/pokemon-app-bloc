@@ -21,9 +21,7 @@ class PokemonBlocSuccessState extends PokemonBlocState {
 class PokemonBlocErrorState extends PokemonBlocState {
   final String errorMsg;
 
-  const PokemonBlocErrorState({
-    required this.errorMsg,
-  });
+  const PokemonBlocErrorState({required this.errorMsg});
   
 }
 

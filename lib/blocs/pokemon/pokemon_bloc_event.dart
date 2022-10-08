@@ -8,7 +8,8 @@ abstract class PokemonBlocEvent extends Equatable {
   List<Object> get props => [];
 }
 
-
-class FetchPokemonEvent extends PokemonBlocEvent {
-  
+class FetchPokemonEvent extends PokemonBlocEvent {}
+class SearchPokemonEvent extends PokemonBlocEvent {
+  final String queryText;
+  const SearchPokemonEvent({required this.queryText});
 }
