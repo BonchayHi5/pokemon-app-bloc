@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_app/blocs/search_pokemon/search_pokemon_bloc.dart';
+import 'package:pokemon_app/ui/screen/home_detail_screen.dart';
 
 
 class PokemonSearchDelegate extends SearchDelegate {
@@ -66,15 +67,20 @@ class PokemonSearchDelegate extends SearchDelegate {
           return ListView.builder(
             itemCount: state.pokemonResult.length,
             itemBuilder: (context, index) {
+              final pokemon = state.pokemonResult[index];
               return GestureDetector(
                 onTap: () {
-
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                    return HomeDetailScreen(pokemon: pokemon);
+                  }));
                 },
                 child: Column(
                   children: [
                     ListTile(
+                      leading: CircleAvatar(radius: 20, backgroundColor: Colors.transparent, backgroundImage: NetworkImage(pokemon.imageurl)),
                       title: Text(
-                        state.pokemonResult[index].name,
+                        pokemon.name,
                         style: const TextStyle(fontSize: 14, color: Colors.black,fontFamily: 'jost'),
                         overflow: TextOverflow.ellipsis,
                       ),

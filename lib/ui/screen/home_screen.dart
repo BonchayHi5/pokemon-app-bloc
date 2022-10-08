@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_app/blocs/pokemon/pokemon_bloc.dart';
 import 'package:pokemon_app/blocs/search_pokemon/search_pokemon_bloc.dart';
+import 'package:pokemon_app/blocs/theme/theme_bloc.dart';
+import 'package:pokemon_app/ui/theme/theme.dart';
 import 'package:pokemon_app/ui/widget/search_delegate.dart';
 import 'package:pokemon_app/ui/widget/pokemon_card.dart';
 
@@ -24,6 +26,12 @@ class HomeScreen extends StatelessWidget {
             }, icon: const Icon(Icons.search,color: Colors.black)),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          BlocProvider.of<ThemeBloc>(context).add(const SwitchThemeEvent());
+        },
+        child: const Icon(Icons.sunny),
       ),
       body: BlocBuilder<PokemonBloc, PokemonBlocState>(
         builder: (context, state) {
