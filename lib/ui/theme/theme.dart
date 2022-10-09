@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-enum AppTheme {
-  light,
-  dark,
-}
 
-final appThemeData = {
-  AppTheme.light: ThemeData.light(),
-  AppTheme.dark: ThemeData.dark(),
-};
+class AppTheme {
+  static final lightTheme = ThemeData.light().copyWith(
+    appBarTheme: const AppBarTheme(
+    elevation: 0,
+    color: Colors.white,
+    iconTheme: IconThemeData(
+      color: Colors.black
+    )),
+  );
+  static final darkTheme = ThemeData.dark();
+}

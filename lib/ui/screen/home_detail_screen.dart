@@ -19,7 +19,7 @@ class HomeDetailScreen extends StatelessWidget {
           child: const Icon(Icons.arrow_back_ios_new,color: Colors.white),
         ),
         actions: const [
-          Padding(padding: EdgeInsets.only(right: 16),child: Icon(Icons.favorite_border)),
+          Padding(padding: EdgeInsets.only(right: 16), child: Icon(Icons.favorite_border,color: Colors.white)),
         ],
       ),
       body: Stack(
@@ -30,9 +30,9 @@ class HomeDetailScreen extends StatelessWidget {
             child: Container(
               height: MediaQuery.of(context).size.height / 2,
               width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(32),
                   topRight: Radius.circular(32),
                 )

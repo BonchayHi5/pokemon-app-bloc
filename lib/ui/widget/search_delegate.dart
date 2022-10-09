@@ -17,7 +17,7 @@ class PokemonSearchDelegate extends SearchDelegate {
         child: IconButton(
           icon: const Icon(
             Icons.clear,
-            color: Colors.black,
+            // color: Colors.black,
           ),
           onPressed: () {
             query = '';
@@ -33,7 +33,7 @@ class PokemonSearchDelegate extends SearchDelegate {
     return Padding(
       padding: const EdgeInsets.only(left: 8),
       child: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.black),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () {
           close(context, null);
         },
@@ -49,7 +49,7 @@ class PokemonSearchDelegate extends SearchDelegate {
         if(state is SearchPokemonLoading) {
           return const Center(
             child: CircularProgressIndicator(
-              color: Colors.black,
+              // color: Colors.black,
             ),
           );
         }
@@ -78,10 +78,10 @@ class PokemonSearchDelegate extends SearchDelegate {
                 child: Column(
                   children: [
                     ListTile(
-                      leading: CircleAvatar(radius: 20, backgroundColor: Colors.transparent, backgroundImage: NetworkImage(pokemon.imageurl)),
+                      leading: CircleAvatar(radius: 24, backgroundColor: Colors.transparent, backgroundImage: NetworkImage(pokemon.imageurl)),
                       title: Text(
                         pokemon.name,
-                        style: const TextStyle(fontSize: 14, color: Colors.black,fontFamily: 'jost'),
+                        style: const TextStyle(fontSize: 14),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -98,8 +98,6 @@ class PokemonSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // print(query);
-    // var searchList = [];
     return Container();
   }
 }

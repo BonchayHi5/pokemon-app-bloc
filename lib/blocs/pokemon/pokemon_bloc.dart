@@ -17,10 +17,11 @@ class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
     try {
       final pokemonList = await ApiService.fetchPokemonList();
       emit(PokemonBlocSuccessState(pokemonList: pokemonList));
-      FlutterNativeSplash.remove();
+
     } catch (e) {
       emit(PokemonBlocErrorState(errorMsg: e.toString()));
     }
+    // FlutterNativeSplash.remove();
   }
 
 }

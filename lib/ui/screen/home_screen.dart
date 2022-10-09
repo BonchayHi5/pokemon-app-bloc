@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemon_app/blocs/cubit/theme_cubit.dart';
 import 'package:pokemon_app/blocs/pokemon/pokemon_bloc.dart';
 import 'package:pokemon_app/blocs/search_pokemon/search_pokemon_bloc.dart';
-import 'package:pokemon_app/blocs/theme/theme_bloc.dart';
 import 'package:pokemon_app/ui/theme/theme.dart';
 import 'package:pokemon_app/ui/widget/search_delegate.dart';
 import 'package:pokemon_app/ui/widget/pokemon_card.dart';
@@ -29,20 +29,17 @@ class HomeScreen extends StatelessWidget {
                     delegate: PokemonSearchDelegate(pokemonBloc: BlocProvider.of<SearchPokemonBloc>(context)),
                   );
                 },
-                icon: const Icon(Icons.search, color: Colors.black)),
+                icon: const Icon(Icons.search)),
           )
         ],
       ),
-      floatingActionButton: BlocBuilder<ThemeBloc, ThemeState>(
+      floatingActionButton: BlocBuilder<ThemeCubit, ThemeData>(
         builder: (context, state) {
           return FloatingActionButton(
             onPressed: () {
-              if(state is ThemeLoadedState) {
-                print(state.isDark);
-                context.read<ThemeBloc>().add(SwitchThemeEvent(isDarkTheme: !state.isDark , appTheme: state.isDark ? appThemeData[AppTheme.light]! :  appThemeData[AppTheme.dark]!));
-              }
+              context.read<ThemeCubit>().onChangeTheme();
             },
-            child: const Icon(Icons.sunny),
+            child: Icon(state == AppTheme.lightTheme ? Icons.sunny : Icons.brightness_2),
           );
         },
       ),
