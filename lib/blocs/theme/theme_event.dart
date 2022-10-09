@@ -7,5 +7,7 @@ abstract class ThemeEvent extends Equatable {
 }
 
 class SwitchThemeEvent extends ThemeEvent {
-  const SwitchThemeEvent();
+  final bool isDarkTheme;
+  final ThemeData appTheme;
+  const SwitchThemeEvent({required this.isDarkTheme, required this.appTheme});
 }

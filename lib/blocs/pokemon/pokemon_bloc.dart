@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:pokemon_app/model/pokemon_model.dart';
 import 'package:pokemon_app/service/api_services.dart';
 
@@ -16,6 +17,7 @@ class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
     try {
       final pokemonList = await ApiService.fetchPokemonList();
       emit(PokemonBlocSuccessState(pokemonList: pokemonList));
+      FlutterNativeSplash.remove();
     } catch (e) {
       emit(PokemonBlocErrorState(errorMsg: e.toString()));
     }

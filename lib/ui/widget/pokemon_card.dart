@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon_app/model/pokemon_model.dart';
 import 'package:pokemon_app/ui/screen/home_detail_screen.dart';
@@ -61,7 +62,7 @@ class PokemonCard extends StatelessWidget {
                     ),
                     Hero(
                       tag: pokemon.id,
-                      child: Image.network(pokemon.imageurl,height: 80, width: 80),
+                      child: CachedNetworkImage(imageUrl:pokemon.imageurl,height: 80, width: 80),
                     ),
                   ],
                 ),

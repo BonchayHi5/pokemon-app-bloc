@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pokemon_app/model/pokemon_model.dart';
 import 'package:pokemon_app/utils/app_utils.dart';
@@ -64,7 +65,7 @@ class HomeDetailScreen extends StatelessWidget {
             top: 90,
             child: Hero(
               tag: pokemon.id,
-              child: Image.network(pokemon.imageurl,height: MediaQuery.of(context).size.height * 0.35),
+              child: CachedNetworkImage(imageUrl: pokemon.imageurl,height: MediaQuery.of(context).size.height * 0.35),
             ),
           ),
           Align(

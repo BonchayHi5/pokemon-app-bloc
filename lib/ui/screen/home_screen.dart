@@ -17,21 +17,34 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         centerTitle: false,
-        title: const Text("Pokemon App",style:TextStyle(color: Colors.black, fontWeight: FontWeight.w700)),
+        leadingWidth: 180,
+        leading: Padding(padding: const EdgeInsets.only(left: 16), child: Image.asset("assets/pokemon-logo.png")),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
-            child: IconButton(onPressed: (){
-              showSearch(context: context, delegate: PokemonSearchDelegate(pokemonBloc: BlocProvider.of<SearchPokemonBloc>(context)));
-            }, icon: const Icon(Icons.search,color: Colors.black)),
+            child: IconButton(
+                onPressed: () {
+                  showSearch(
+                    context: context,
+                    delegate: PokemonSearchDelegate(pokemonBloc: BlocProvider.of<SearchPokemonBloc>(context)),
+                  );
+                },
+                icon: const Icon(Icons.search, color: Colors.black)),
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          BlocProvider.of<ThemeBloc>(context).add(const SwitchThemeEvent());
+      floatingActionButton: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          return FloatingActionButton(
+            onPressed: () {
+              if(state is ThemeLoadedState) {
+                print(state.isDark);
+                context.read<ThemeBloc>().add(SwitchThemeEvent(isDarkTheme: !state.isDark , appTheme: state.isDark ? appThemeData[AppTheme.light]! :  appThemeData[AppTheme.dark]!));
+              }
+            },
+            child: const Icon(Icons.sunny),
+          );
         },
-        child: const Icon(Icons.sunny),
       ),
       body: BlocBuilder<PokemonBloc, PokemonBlocState>(
         builder: (context, state) {
@@ -52,19 +65,19 @@ class HomeScreen extends StatelessWidget {
           }
           if (state is PokemonBlocSuccessState) {
             return Padding(
-              padding: const EdgeInsets.only(left: 16,right: 16,top: 8),
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
               child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 1.2,
-                ),
-                itemCount: state.pokemonList.length,
-                itemBuilder: (BuildContext ctx, index) {
-                  final pokemon = state.pokemonList[index];
-                  return PokemonCard(pokemon: pokemon);
-                }),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
+                    childAspectRatio: 1.2,
+                  ),
+                  itemCount: state.pokemonList.length,
+                  itemBuilder: (BuildContext ctx, index) {
+                    final pokemon = state.pokemonList[index];
+                    return PokemonCard(pokemon: pokemon);
+                  }),
             );
           }
           return Container();

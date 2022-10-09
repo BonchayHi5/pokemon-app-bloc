@@ -9,7 +9,8 @@ abstract class ThemeState extends Equatable {
 }
 
 class ThemeLoadedState extends ThemeState {
+  final bool isDark;
   final ThemeData themeData;
 
-  const ThemeLoadedState(this.themeData);
+  const ThemeLoadedState({required this.isDark, required this.themeData});
 }
