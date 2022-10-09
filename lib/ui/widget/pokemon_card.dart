@@ -62,7 +62,7 @@ class PokemonCard extends StatelessWidget {
                     ),
                     Hero(
                       tag: pokemon.id,
-                      child: CachedNetworkImage(imageUrl:pokemon.imageurl,height: 80, width: 80),
+                      child: CachedNetworkImage(imageUrl:pokemon.imageurl,height: 70, width: 70),
                     ),
                   ],
                 ),

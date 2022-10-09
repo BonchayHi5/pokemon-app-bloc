@@ -12,16 +12,15 @@ class PokemonBlocInitialState extends PokemonBlocState {}
 class PokemonBlocLoadingState extends PokemonBlocState {}
 class PokemonBlocSuccessState extends PokemonBlocState {
   final List<PokemonModel> pokemonList;
+  const PokemonBlocSuccessState({required this.pokemonList});
+}
 
-  const PokemonBlocSuccessState({
-    required this.pokemonList,
-  });
-
+class PokemonBlocFavoriteState extends PokemonBlocState{
+  final List<PokemonModel> pokemonList;
+  const PokemonBlocFavoriteState({required this.pokemonList});
 }
 class PokemonBlocErrorState extends PokemonBlocState {
   final String errorMsg;
-
   const PokemonBlocErrorState({required this.errorMsg});
-  
 }
 

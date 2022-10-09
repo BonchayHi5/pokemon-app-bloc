@@ -9,3 +9,8 @@ abstract class PokemonBlocEvent extends Equatable {
 }
 
 class FetchPokemonEvent extends PokemonBlocEvent {}
+
+class AddToFavEvent extends PokemonBlocEvent{
+  final PokemonModel pokemon;
+  const AddToFavEvent({required this.pokemon});
+}

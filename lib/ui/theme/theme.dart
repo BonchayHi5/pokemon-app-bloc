@@ -9,6 +9,10 @@ class AppTheme {
     iconTheme: IconThemeData(
       color: Colors.black
     )),
+    tabBarTheme: TabBarTheme(
+      labelColor: Colors.black,
+      indicator: UnderlineTabIndicator(borderSide: BorderSide(color: Colors.blue[900]!,width: 3)),
+    )
   );
   static final darkTheme = ThemeData.dark();
 }

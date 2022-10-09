@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:pokemon_app/blocs/cubit/theme_cubit.dart';
+import 'package:pokemon_app/blocs/filter_favorite/filter_favorite_bloc.dart';
+import 'package:pokemon_app/blocs/theme/theme_cubit.dart';
 import 'package:pokemon_app/blocs/pokemon/pokemon_bloc.dart';
 import 'package:pokemon_app/blocs/search_pokemon/search_pokemon_bloc.dart';
 import 'package:pokemon_app/ui/screen/home_screen.dart';
+
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -14,7 +15,8 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<PokemonBloc>(create: (BuildContext context) => PokemonBloc()..add(FetchPokemonEvent())),
-        BlocProvider<SearchPokemonBloc>(create: (BuildContext context) => SearchPokemonBloc()),
+        BlocProvider<SearchPokemonBloc>(create: (BuildContext context) => SearchPokemonBloc()), 
+        BlocProvider<FilterFavoriteBloc>(lazy: false,create: (BuildContext context) => FilterFavoriteBloc(pokemonBloc: BlocProvider.of<PokemonBloc>(context))..add(UpdateFilterFavorite())),
         BlocProvider<ThemeCubit>(create: (BuildContext context) => ThemeCubit()),
       ],
       child: BlocBuilder<ThemeCubit,ThemeData>(
