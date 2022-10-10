@@ -22,15 +22,30 @@ class HomeDetailScreen extends StatelessWidget {
           child: const Icon(Icons.arrow_back_ios_new,color: Colors.white),
         ),
         actions:  [
-          BlocBuilder<FilterFavoriteBloc,FilterFavoriteState>(
+          BlocConsumer<FilterFavoriteBloc,FilterFavoriteState>(
+            listener: (context, state) {
+              if(state is FilterFavoriteLoaded) {
+                if(context.read<FilterFavoriteBloc>().getfavouriteBreeds.contains(pokemon)){
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Added to Favorites"),duration: Duration(seconds: 1)));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Removed from Favorites"),duration: Duration(seconds: 1)));
+                }
+              }
+            },
             builder: ((context, state){
-              return Padding(
-              padding: const EdgeInsets.only(right: 16), 
-              child: GestureDetector(
-                onTap: () {
-                  context.read<FilterFavoriteBloc>().add(UpdateFilterFavorite(pokemon: pokemon));
-                },
-                child: const Icon(Icons.favorite_border,color: Colors.white)) );
+              final favLoadedState = state is FilterFavoriteLoaded;
+              if(favLoadedState) {
+                return Padding(
+                padding: const EdgeInsets.only(right: 16), 
+                child: GestureDetector(
+                  onTap: () {
+                    context.read<FilterFavoriteBloc>().add(UpdateFilterFavorite(pokemon: pokemon));
+                  },
+                  child: state.pokemonList.contains(pokemon) ? const Icon(Icons.favorite,color: Colors.red) : const Icon(Icons.favorite_border,color: Colors.white))
+                );
+              } else {
+                return Container();
+              }
             }),
           ),
         ],

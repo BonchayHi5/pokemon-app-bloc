@@ -6,16 +6,27 @@ part 'filter_favorite_event.dart';
 part 'filter_favorite_state.dart';
 
 class FilterFavoriteBloc extends Bloc<FilterFavoriteEvent, FilterFavoriteState> {
-
-  FilterFavoriteBloc() : super(FilterFavoriteInitial()) {
+  FilterFavoriteBloc() : super(const FilterFavoriteLoaded(pokemonList: [])) {
     on<UpdateFilterFavorite>((event, emit) {
       final state = this.state;
       if(state is FilterFavoriteLoaded) {
         emit(FilterFavoriteLoading());
-        emit(FilterFavoriteLoaded(pokemonList: List.from(state.pokemonList)..add(event.pokemon)));
+        if(state.pokemonList.contains(event.pokemon)) {
+          emit(FilterFavoriteLoaded(pokemonList: List.from(state.pokemonList)..remove(event.pokemon)));
+        } else {
+          emit(FilterFavoriteLoaded(pokemonList: List.from(state.pokemonList)..add(event.pokemon)));
+        }
       }
     });
 
   }
 
+  List get getfavouriteBreeds {
+    final state = this.state;
+    List pokemonList = [];
+    if(state is FilterFavoriteLoaded) {
+      pokemonList = state.pokemonList;
+    }
+    return pokemonList;
+  }
 }
