@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemon_app/blocs/filter_favorite/filter_favorite_bloc.dart';
 import 'package:pokemon_app/blocs/pokemon/pokemon_bloc.dart';
 import 'package:pokemon_app/model/pokemon_model.dart';
 import 'package:pokemon_app/utils/app_utils.dart';
@@ -21,15 +22,15 @@ class HomeDetailScreen extends StatelessWidget {
           child: const Icon(Icons.arrow_back_ios_new,color: Colors.white),
         ),
         actions:  [
-          BlocBuilder<PokemonBloc,PokemonBlocState>(
+          BlocBuilder<FilterFavoriteBloc,FilterFavoriteState>(
             builder: ((context, state){
               return Padding(
               padding: const EdgeInsets.only(right: 16), 
               child: GestureDetector(
                 onTap: () {
-                  context.read<PokemonBloc>().add(AddToFavEvent(pokemon: pokemon));
+                  context.read<FilterFavoriteBloc>().add(UpdateFilterFavorite(pokemon: pokemon));
                 },
-                child: const Icon(Icons.favorite_border,color: Colors.white)));
+                child: const Icon(Icons.favorite_border,color: Colors.white)) );
             }),
           ),
         ],

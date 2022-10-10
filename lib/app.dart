@@ -16,7 +16,7 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider<PokemonBloc>(create: (BuildContext context) => PokemonBloc()..add(FetchPokemonEvent())),
         BlocProvider<SearchPokemonBloc>(create: (BuildContext context) => SearchPokemonBloc()), 
-        BlocProvider<FilterFavoriteBloc>(lazy: false,create: (BuildContext context) => FilterFavoriteBloc(pokemonBloc: BlocProvider.of<PokemonBloc>(context))..add(UpdateFilterFavorite())),
+        BlocProvider<FilterFavoriteBloc>(lazy: false,create: (BuildContext context) => FilterFavoriteBloc()),
         BlocProvider<ThemeCubit>(create: (BuildContext context) => ThemeCubit()),
       ],
       child: BlocBuilder<ThemeCubit,ThemeData>(

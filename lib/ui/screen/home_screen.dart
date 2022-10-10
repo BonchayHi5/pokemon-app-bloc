@@ -100,23 +100,6 @@ class HomeScreen extends StatelessWidget {
                   }),
             );
           }
-          if (state is PokemonBlocFavoriteState) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
-              child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 12,
-                    crossAxisSpacing: 12,
-                    childAspectRatio: 1.2,
-                  ),
-                  itemCount: state.pokemonList.length,
-                  itemBuilder: (BuildContext ctx, index) {
-                    final pokemon = state.pokemonList[index];
-                    return PokemonCard(pokemon: pokemon);
-                  }),
-            );
-          }
           return Container();
         },
       );

@@ -9,7 +9,6 @@ part 'pokemon_bloc_state.dart';
 class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
   PokemonBloc() : super(PokemonBlocInitialState()) {
     on<FetchPokemonEvent>(_onFetchPoke);
-    on<AddToFavEvent>(_onAddToFav);
   }
 
   void _onFetchPoke(event, emit) async {
@@ -20,14 +19,6 @@ class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
     } catch (e) {
       emit(PokemonBlocErrorState(errorMsg: e.toString()));
     }
-    // FlutterNativeSplash.remove();
   }
 
-  void _onAddToFav(event,emit) {
-    print(event.pokemon.id);
-    event.pokemon.isFav = true;
-    if(state is PokemonBlocSuccessState) {
-      
-    }
-  }
 }

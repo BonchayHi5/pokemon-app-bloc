@@ -9,8 +9,7 @@ abstract class FilterFavoriteEvent extends Equatable {
 
 
 class UpdateFilterFavorite extends FilterFavoriteEvent {
-  final List<PokemonModel> pokemonList;
-  const UpdateFilterFavorite({this.pokemonList = const <PokemonModel>[]});
-   @override
-  List<Object> get props => [pokemonList];
+  final PokemonModel pokemon;
+  const UpdateFilterFavorite({required this.pokemon});
+
 }
