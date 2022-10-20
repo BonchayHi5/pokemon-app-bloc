@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemon_app/blocs/filter_favorite/filter_favorite_bloc.dart';
 import 'package:pokemon_app/model/pokemon_model.dart';
 import 'package:pokemon_app/ui/screen/home_detail_screen.dart';
 import 'package:pokemon_app/utils/app_utils.dart';
@@ -26,9 +28,26 @@ class PokemonCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(pokemon.id,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w700)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(pokemon.id,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w700)),
+                BlocBuilder<FilterFavoriteBloc,FilterFavoriteState>(
+                  builder: ((context, state) {
+                    final favState = state is FilterFavoriteLoaded;
+                    if(favState) {
+                      return  GestureDetector(
+                        onTap: () {
+                          context.read<FilterFavoriteBloc>().add(UpdateFilterFavorite(pokemon: pokemon));
+                        },
+                        child: state.pokemonList.contains(pokemon) ? const Icon(Icons.favorite,color: Colors.red,) : const Icon(Icons.favorite_border,color: Colors.white),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }),
+                )
+              ],
             ),
             Text(pokemon.name,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w600)),
             Expanded(
