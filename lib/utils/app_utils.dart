@@ -13,8 +13,8 @@ class AppUtils {
     return Color(colorint);
   }
 
-  static Color toPokemonTypeColor(String type) {
-    switch (type) {
+  static Color toPokemonTypeColor({required String type}) {
+    switch (type.toLowerCase()) {
       case 'normal':
         return AppUtils.convertHexaColor('#A8A77A');
       case 'fire':

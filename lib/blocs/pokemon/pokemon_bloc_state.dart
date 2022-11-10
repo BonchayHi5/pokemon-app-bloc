@@ -14,7 +14,6 @@ class PokemonBlocSuccessState extends PokemonBlocState {
   final List<PokemonModel> pokemonList;
   const PokemonBlocSuccessState({required this.pokemonList});
 }
-
 class PokemonBlocErrorState extends PokemonBlocState {
   final String errorMsg;
   const PokemonBlocErrorState({required this.errorMsg});

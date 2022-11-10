@@ -12,7 +12,11 @@ class FilterPokeTab extends StatelessWidget {
     return BlocBuilder<FilterFavoriteBloc, FilterFavoriteState>(
         builder: (context, state) {
       if (state is FilterFavoriteLoading) {
-        return Center( child: CircularProgressIndicator(color: Colors.blue[900]!));
+        return Center(
+          child: CircularProgressIndicator(
+            color: Colors.blue[900]!,
+          ),
+        );
       }
       if (state is FilterFavoriteLoaded) {
         return state.pokemonList.isEmpty

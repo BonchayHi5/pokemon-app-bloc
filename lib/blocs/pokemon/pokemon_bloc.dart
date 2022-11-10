@@ -23,4 +23,8 @@ class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
     FlutterNativeSplash.remove();
   }
 
+  void update(event,emit) {
+    
+  }
+
 }

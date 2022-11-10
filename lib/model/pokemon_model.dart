@@ -60,7 +60,7 @@ class PokemonModel {
       required this.attack,
       required this.defense,
       required this.speed,
-        this.isFav = false,
+        // this.isFav = false,
         this.weaknesses,
         this.evolutions,
         this.abilities,
@@ -95,7 +95,7 @@ class PokemonModel {
     final int? specialAttack;
     final int? specialDefense;
     final int speed;
-    bool isFav;
+    // bool isFav;
     final int? total;
     final String? malePercentage;
     final String? femalePercentage;

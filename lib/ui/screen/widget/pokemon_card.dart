@@ -23,7 +23,9 @@ class PokemonCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: AppUtils.toPokemonTypeColor(pokemon.typeofpokemon.first.toLowerCase()),
+          color: AppUtils.toPokemonTypeColor(
+            type: pokemon.typeofpokemon.first
+          ),
           borderRadius: BorderRadius.circular(15)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,16 +33,31 @@ class PokemonCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(pokemon.id,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w700)),
+                Text(
+                  pokemon.id,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
                 BlocBuilder<FilterFavoriteBloc,FilterFavoriteState>(
                   builder: ((context, state) {
                     final favState = state is FilterFavoriteLoaded;
                     if(favState) {
                       return  GestureDetector(
                         onTap: () {
-                          context.read<FilterFavoriteBloc>().add(UpdateFilterFavorite(pokemon: pokemon));
+                          final favBloc =  context.read<FilterFavoriteBloc>();
+                          favBloc.add(UpdateFilterFavorite(pokemon: pokemon));
                         },
-                        child: state.pokemonList.contains(pokemon) ? const Icon(Icons.favorite,color: Colors.red,) : const Icon(Icons.favorite_border,color: Colors.white),
+                        child: state.pokemonList.contains(pokemon) 
+                          ? const Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            ) 
+                          : const Icon(
+                              Icons.favorite_border,
+                              color: Colors.white,
+                            ),
                       );
                     } else {
                       return Container();
@@ -49,7 +66,13 @@ class PokemonCard extends StatelessWidget {
                 )
               ],
             ),
-            Text(pokemon.name,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w600)),
+            Text(
+              pokemon.name,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
@@ -61,27 +84,43 @@ class PokemonCard extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 6),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: List.generate(pokemon.typeofpokemon.length, (index) => Padding(
-                          padding: const EdgeInsets.only(bottom: 0),
-                          child: Container(
-                            margin: const EdgeInsets.only(bottom: 6),
-                            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 4),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.8),
-                              borderRadius: BorderRadius.circular(32)
-                            ),
-                            child: Text(
-                                pokemon.typeofpokemon[index],
-                                style: TextStyle(fontSize: 12, color: AppUtils.toPokemonTypeColor(pokemon.typeofpokemon[index].toLowerCase())
+                        children: List.generate(
+                          pokemon.typeofpokemon.length, 
+                          (index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 0),
+                              child: Container(
+                                margin: const EdgeInsets.only(bottom: 6),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.8),
+                                  borderRadius: BorderRadius.circular(32)
+                                ),
+                                child: Text(
+                                  pokemon.typeofpokemon[index],
+                                  style: TextStyle(
+                                    fontSize: 12, 
+                                    color: AppUtils.toPokemonTypeColor(
+                                      type: pokemon.typeofpokemon[index]
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        )),
+                            );
+                          }
+                        ),
                       ),
                     ),
                     Hero(
                       tag: pokemon.id,
-                      child: CachedNetworkImage(imageUrl:pokemon.imageurl,height: 70, width: 70),
+                      child: CachedNetworkImage(
+                        height: 70, 
+                        width: 70,
+                        imageUrl:pokemon.imageurl,
+                      ),
                     ),
                   ],
                 ),

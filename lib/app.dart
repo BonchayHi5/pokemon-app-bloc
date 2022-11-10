@@ -17,11 +17,23 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<PokemonBloc>(create: (BuildContext context) => PokemonBloc()..add(FetchPokemonEvent())),
-        BlocProvider<SearchPokemonBloc>( create: (BuildContext context) => SearchPokemonBloc()),
-        BlocProvider<FilterFavoriteBloc>( create: (BuildContext context) => FilterFavoriteBloc()),
-        BlocProvider<ThemeCubit>(create: (BuildContext context) => ThemeCubit()),
-        BlocProvider<LocaleCubit>(create: (BuildContext context) => LocaleCubit()),
+        BlocProvider<PokemonBloc>(
+          create: (BuildContext context) {
+            return PokemonBloc()..add(FetchPokemonEvent());
+          },
+        ),
+        BlocProvider<SearchPokemonBloc>(
+          create: (BuildContext context) => SearchPokemonBloc(),
+        ),
+        BlocProvider<FilterFavoriteBloc>(
+          create: (BuildContext context) => FilterFavoriteBloc(),
+        ),
+        BlocProvider<ThemeCubit>(
+          create: (BuildContext context) => ThemeCubit(),
+        ),
+        BlocProvider<LocaleCubit>(
+          create: (BuildContext context) => LocaleCubit(),
+        ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeData>(
         builder: (context, state) {

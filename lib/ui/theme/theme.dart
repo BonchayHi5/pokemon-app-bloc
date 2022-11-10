@@ -11,7 +11,12 @@ class AppTheme {
     )),
     tabBarTheme: TabBarTheme(
       labelColor: Colors.black,
-      indicator: UnderlineTabIndicator(borderSide: BorderSide(color: Colors.blue[900]!,width: 3)),
+      indicator: UnderlineTabIndicator(
+        borderSide: BorderSide(
+          color: Colors.blue[900]!,
+          width: 3,
+        ),
+      ),
     )
   );
   static final darkTheme = ThemeData.dark();

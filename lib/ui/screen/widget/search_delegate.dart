@@ -78,7 +78,11 @@ class PokemonSearchDelegate extends SearchDelegate {
                 child: Column(
                   children: [
                     ListTile(
-                      leading: CircleAvatar(radius: 24, backgroundColor: Colors.transparent, backgroundImage: NetworkImage(pokemon.imageurl)),
+                      leading: CircleAvatar(
+                        radius: 24, 
+                        backgroundColor: Colors.transparent, 
+                        backgroundImage: NetworkImage(pokemon.imageurl),
+                      ),
                       title: Text(
                         pokemon.name,
                         style: const TextStyle(fontSize: 14),

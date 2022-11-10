@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokemon_app/blocs/filter_favorite/filter_favorite_bloc.dart';
-import 'package:pokemon_app/blocs/locale/locale_cubit.dart';
 import 'package:pokemon_app/blocs/theme/theme_cubit.dart';
-import 'package:pokemon_app/blocs/pokemon/pokemon_bloc.dart';
 import 'package:pokemon_app/blocs/search_pokemon/search_pokemon_bloc.dart';
 import 'package:pokemon_app/service/app_localizations.dart';
 import 'package:pokemon_app/ui/screen/widget/all_poke_tab.dart';
 import 'package:pokemon_app/ui/screen/widget/favorite_poke_tab.dart';
+import 'package:pokemon_app/ui/screen/widget/language_card.dart';
 import 'package:pokemon_app/ui/theme/theme.dart';
 import 'package:pokemon_app/ui/screen/widget/search_delegate.dart';
-import 'package:pokemon_app/ui/screen/widget/pokemon_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -31,16 +28,22 @@ class HomeScreen extends StatelessWidget {
           elevation: 0,
           centerTitle: false,
           leadingWidth: 180,
-          leading: Padding(padding: const EdgeInsets.only(left: 16), child: Image.asset("assets/pokemon-logo.png")),
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 16), 
+            child: Image.asset("assets/pokemon-logo.png"),
+          ),
           actions: [
             IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () {
-                  showSearch(
-                    context: context,
-                    delegate: PokemonSearchDelegate(pokemonBloc: BlocProvider.of<SearchPokemonBloc>(context))
-                  );
-                }),
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: PokemonSearchDelegate(
+                    pokemonBloc: BlocProvider.of<SearchPokemonBloc>(context),
+                  )
+                );
+              },
+            ),
             Padding(
               padding: const EdgeInsets.only(right: 8),
               child: IconButton(
@@ -59,27 +62,15 @@ class HomeScreen extends StatelessWidget {
                             "value": "km"
                           }
                         ];
-                        return BlocBuilder<LocaleCubit, ChangeLocaleState>(
-                          builder: (context, state) {
-                            return Wrap(
-                              children: List.generate(suppLocale.length,(index) => GestureDetector(
-                                  onTap: () {
-                                    context.read<LocaleCubit>().changeLocale(suppLocale[index]["value"]);
-                                    Navigator.pop(context);
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: state.locale.languageCode == suppLocale[index]["value"]
-                                        ? ListTile(
-                                            title: Text(suppLocale[index]["title"].toUpperCase(),style: const TextStyle(fontSize: 14)),
-                                            trailing: Icon(Icons.check,color: Colors.blue[900]!),
-                                          )
-                                        : ListTile(title: Text(suppLocale[index]["title"].toUpperCase(),style: const TextStyle(fontSize: 14))),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
+                        return Wrap(
+                          children: List.generate(
+                            suppLocale.length,
+                            (index) {
+                              return LanguageCard(
+                                data: suppLocale[index],
+                              );
+                            }
+                          ),
                         );
                       }
                     ),
@@ -97,7 +88,8 @@ class HomeScreen extends StatelessWidget {
               },
               child: Icon(state == AppTheme.lightTheme
                   ? Icons.sunny
-                  : Icons.brightness_2),
+                  : Icons.brightness_2
+                )
             );
           },
         ),
