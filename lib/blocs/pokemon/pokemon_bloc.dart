@@ -11,8 +11,8 @@ class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
   PokemonBloc() : super(PokemonBlocInitialState()) {
     on<FetchPokemonEvent>(_onFetchPoke);
     on<UpdatePokemonEvent>(_onUpdatePoke);
+    on<FilterFavPokemonClickedEvent>(_onFilterFavPokeClicked);
     on<FilterFavPokemonEvent>(_onFilterFavPoke);
-    on<FilterPokemonEvent>(_onFilterPoke);
   }
 
   void _onFetchPoke(event, emit) async {
@@ -50,11 +50,11 @@ class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
     }
   }
   
-  void _onFilterFavPoke(event, emit) async {
+  void _onFilterFavPokeClicked(event, emit) async {
     final state = this.state;
     if(state is PokemonBlocSuccessState) {
       final initialList = state.pokemonList;
-      final filterPokeList = initialList.where((element) => element.isFav).toList();
+      final filterPokeList = getFavPokeList(initialList);
       state.isFilterFav = !state.isFilterFav;
       emit(PokemonBlocLoadingState());
       emit(
@@ -67,11 +67,11 @@ class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
     }
   }
 
-  void _onFilterPoke(event, emit) async {
+  void _onFilterFavPoke(event, emit) async {
     final state = this.state;
     if(state is PokemonBlocSuccessState) {
       final initialList = state.pokemonList;
-      final filterPokeList = initialList.where((element) => element.isFav).toList();
+      final filterPokeList = getFavPokeList(initialList);
       emit(PokemonBlocLoadingState());
       emit(
         PokemonBlocSuccessState(
@@ -82,6 +82,9 @@ class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
       );
     }
   }
-  
+
+  List<PokemonModel> getFavPokeList(List<PokemonModel> initialList) {
+    return initialList.where((element) => element.isFav).toList();
+  }
 
 }

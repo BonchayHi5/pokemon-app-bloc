@@ -58,7 +58,7 @@ class FilterButton extends StatelessWidget {
                       onTap: () {
                         if(state is PokemonBlocSuccessState) {
                           final filterFavBloc = context.read<PokemonBloc>();
-                          filterFavBloc.add(FilterFavPokemonEvent());
+                          filterFavBloc.add(FilterFavPokemonClickedEvent());
                           Navigator.pop(context);
                         }
                       },

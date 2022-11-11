@@ -13,6 +13,6 @@ class UpdatePokemonEvent extends PokemonBlocEvent {
   final PokemonModel pokemon;
   const UpdatePokemonEvent({required this.pokemon});
 }
+class FilterFavPokemonClickedEvent extends PokemonBlocEvent {}
 class FilterFavPokemonEvent extends PokemonBlocEvent {}
-class FilterPokemonEvent extends PokemonBlocEvent {}
 
