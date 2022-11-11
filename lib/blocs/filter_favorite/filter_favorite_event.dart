@@ -11,5 +11,5 @@ abstract class FilterFavoriteEvent extends Equatable {
 class UpdateFilterFavorite extends FilterFavoriteEvent {
   final PokemonModel pokemon;
   const UpdateFilterFavorite({required this.pokemon});
-
 }
+

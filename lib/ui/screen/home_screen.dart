@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokemon_app/blocs/pokemon/pokemon_bloc.dart';
 import 'package:pokemon_app/blocs/theme/theme_cubit.dart';
 import 'package:pokemon_app/blocs/search_pokemon/search_pokemon_bloc.dart';
 import 'package:pokemon_app/service/app_localizations.dart';
 import 'package:pokemon_app/ui/screen/widget/all_poke_tab.dart';
 import 'package:pokemon_app/ui/screen/widget/favorite_poke_tab.dart';
+import 'package:pokemon_app/ui/screen/widget/filter_button.dart';
 import 'package:pokemon_app/ui/screen/widget/language_card.dart';
 import 'package:pokemon_app/ui/theme/theme.dart';
 import 'package:pokemon_app/ui/screen/widget/search_delegate.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -33,16 +36,24 @@ class HomeScreen extends StatelessWidget {
             child: Image.asset("assets/pokemon-logo.png"),
           ),
           actions: [
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                showSearch(
-                  context: context,
-                  delegate: PokemonSearchDelegate(
-                    pokemonBloc: BlocProvider.of<SearchPokemonBloc>(context),
-                  )
-                );
-              },
+            const FilterButton(),
+            BlocProvider.value(
+              value: BlocProvider.of<PokemonBloc>(context),
+              child: IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () {
+                  final state = context.read<PokemonBloc>().state;
+                  if(state is PokemonBlocSuccessState) {
+                    showSearch(
+                      context: context,
+                      delegate: PokemonSearchDelegate(
+                        pokemonBloc: BlocProvider.of<SearchPokemonBloc>(context),
+                        pokemonList: state.pokemonList,
+                      )
+                    );
+                  }
+                },
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(right: 8),

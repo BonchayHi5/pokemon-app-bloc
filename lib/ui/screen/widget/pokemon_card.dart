@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_app/blocs/filter_favorite/filter_favorite_bloc.dart';
+import 'package:pokemon_app/blocs/pokemon/pokemon_bloc.dart';
 import 'package:pokemon_app/model/pokemon_model.dart';
 import 'package:pokemon_app/ui/screen/home_detail_screen.dart';
 import 'package:pokemon_app/utils/app_utils.dart';
@@ -13,6 +14,8 @@ class PokemonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    if(pokemon.isFav)print(pokemon.id);
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context){
@@ -46,7 +49,10 @@ class PokemonCard extends StatelessWidget {
                     if(favState) {
                       return  GestureDetector(
                         onTap: () {
-                          final favBloc =  context.read<FilterFavoriteBloc>();
+                          final favBloc = context.read<FilterFavoriteBloc>();
+                          final pokeBloc = context.read<PokemonBloc>();
+                          pokeBloc.add(UpdatePokemonEvent(pokemon: pokemon));
+                          pokeBloc.add(FilterPokemonEvent());
                           favBloc.add(UpdateFilterFavorite(pokemon: pokemon));
                         },
                         child: state.pokemonList.contains(pokemon) 

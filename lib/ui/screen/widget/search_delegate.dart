@@ -2,12 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_app/blocs/search_pokemon/search_pokemon_bloc.dart';
+import 'package:pokemon_app/model/pokemon_model.dart';
 import 'package:pokemon_app/ui/screen/home_detail_screen.dart';
 
 
 class PokemonSearchDelegate extends SearchDelegate {
   final Bloc<SearchPokemonEvent, SearchPokemonState> pokemonBloc;
-  PokemonSearchDelegate({required this.pokemonBloc});
+  final List<PokemonModel> pokemonList;
+  PokemonSearchDelegate({required this.pokemonBloc,required this.pokemonList});
   
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -21,7 +23,7 @@ class PokemonSearchDelegate extends SearchDelegate {
           ),
           onPressed: () {
             query = '';
-            pokemonBloc.add(SearchPokemon(queryText: query));
+            pokemonBloc.add(SearchPokemon(queryText: query,pokemonList: pokemonList));
           },
         ),
       ),
@@ -43,7 +45,7 @@ class PokemonSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    pokemonBloc.add(SearchPokemon(queryText: query));
+    pokemonBloc.add(SearchPokemon(queryText: query,pokemonList: pokemonList));
     return BlocBuilder<SearchPokemonBloc,SearchPokemonState>(
       builder: (context,state) {
         if(state is SearchPokemonLoading) {
@@ -71,9 +73,11 @@ class PokemonSearchDelegate extends SearchDelegate {
               return GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                    return HomeDetailScreen(pokemon: pokemon);
-                  }));
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context){
+                      return HomeDetailScreen(pokemon: pokemon);
+                    }),
+                  );
                 },
                 child: Column(
                   children: [

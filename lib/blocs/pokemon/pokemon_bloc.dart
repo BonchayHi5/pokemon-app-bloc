@@ -10,21 +10,78 @@ part 'pokemon_bloc_state.dart';
 class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
   PokemonBloc() : super(PokemonBlocInitialState()) {
     on<FetchPokemonEvent>(_onFetchPoke);
+    on<UpdatePokemonEvent>(_onUpdatePoke);
+    on<FilterFavPokemonEvent>(_onFilterFavPoke);
+    on<FilterPokemonEvent>(_onFilterPoke);
   }
 
   void _onFetchPoke(event, emit) async {
     emit(PokemonBlocLoadingState());
     try {
       final pokemonList = await ApiService.fetchPokemonList();
-      emit(PokemonBlocSuccessState(pokemonList: pokemonList));
+      emit(
+        PokemonBlocSuccessState(
+          pokemonList: pokemonList,filterPokemonList: const [],
+        ),
+      );
     } catch (e) {
       emit(PokemonBlocErrorState(errorMsg: e.toString()));
     }
     FlutterNativeSplash.remove();
   }
 
-  void update(event,emit) {
-    
+
+  void _onUpdatePoke(event, emit) async {
+    final state = this.state;
+    if(state is PokemonBlocSuccessState) {
+      final initialList = state.pokemonList;
+      final poke = initialList.firstWhere((element) => element.id == event.pokemon.id);
+      poke.isFav = !poke.isFav;
+      if(!state.isFilterFav) {
+        emit(PokemonBlocLoadingState());
+        emit(
+          PokemonBlocSuccessState(
+            isFilterFav: state.isFilterFav,
+            pokemonList: initialList,
+            filterPokemonList: const []
+          ),
+        );
+      }
+    }
   }
+  
+  void _onFilterFavPoke(event, emit) async {
+    final state = this.state;
+    if(state is PokemonBlocSuccessState) {
+      final initialList = state.pokemonList;
+      final filterPokeList = initialList.where((element) => element.isFav).toList();
+      state.isFilterFav = !state.isFilterFav;
+      emit(PokemonBlocLoadingState());
+      emit(
+        PokemonBlocSuccessState(
+          isFilterFav: state.isFilterFav, 
+          pokemonList: initialList,
+          filterPokemonList: filterPokeList
+        ),
+      );
+    }
+  }
+
+  void _onFilterPoke(event, emit) async {
+    final state = this.state;
+    if(state is PokemonBlocSuccessState) {
+      final initialList = state.pokemonList;
+      final filterPokeList = initialList.where((element) => element.isFav).toList();
+      emit(PokemonBlocLoadingState());
+      emit(
+        PokemonBlocSuccessState(
+          isFilterFav: state.isFilterFav,
+          pokemonList: initialList,
+          filterPokemonList: filterPokeList
+        ),
+      );
+    }
+  }
+  
 
 }

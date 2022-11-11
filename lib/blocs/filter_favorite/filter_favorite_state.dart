@@ -12,4 +12,9 @@ class FilterFavoriteLoaded extends FilterFavoriteState {
   final List<PokemonModel> pokemonList;
   const FilterFavoriteLoaded({required this.pokemonList});
 }
+class FilterAllLoaded extends FilterFavoriteState {
+  final List<PokemonModel> pokemonList;
+  const FilterAllLoaded({required this.pokemonList});
+}
+
 class FilterFavoriteLoading extends FilterFavoriteState {}

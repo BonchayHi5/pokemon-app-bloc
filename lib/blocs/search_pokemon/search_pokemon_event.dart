@@ -9,7 +9,8 @@ abstract class SearchPokemonEvent extends Equatable {
 
 class SearchPokemon extends SearchPokemonEvent {
   final String queryText;
-  SearchPokemon({required this.queryText});
+  final List<PokemonModel> pokemonList;
+  SearchPokemon({required this.queryText, required this.pokemonList});
 }
 
 

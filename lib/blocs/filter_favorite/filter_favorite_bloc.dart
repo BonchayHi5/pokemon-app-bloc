@@ -1,3 +1,4 @@
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pokemon_app/model/pokemon_model.dart';
@@ -22,9 +23,9 @@ class FilterFavoriteBloc extends Bloc<FilterFavoriteEvent, FilterFavoriteState> 
     }
   }
 
-  List get getfavouriteBreeds {
+  List<PokemonModel> get getfavouritePoke {
     final state = this.state;
-    List pokemonList = [];
+    List<PokemonModel> pokemonList = [];
     if(state is FilterFavoriteLoaded) {
       pokemonList = state.pokemonList;
     }

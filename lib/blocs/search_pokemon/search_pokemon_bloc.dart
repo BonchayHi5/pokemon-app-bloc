@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pokemon_app/model/pokemon_model.dart';
-import 'package:pokemon_app/service/api_services.dart';
 
 part 'search_pokemon_event.dart';
 part 'search_pokemon_state.dart';
@@ -17,7 +16,7 @@ class SearchPokemonBloc extends Bloc<SearchPokemonEvent, SearchPokemonState> {
     } else {
       emit(SearchPokemonLoading());
       try {
-        final pokemonList = await ApiService.fetchPokemonList();
+        final pokemonList = event.pokemonList;
         final resultList = pokemonList.where((element) => element.name.toString().toLowerCase().contains(event.queryText.toLowerCase())).toList();
         if(resultList.isNotEmpty) {
           emit(SearchPokemonLoaded(pokemonResult: resultList));

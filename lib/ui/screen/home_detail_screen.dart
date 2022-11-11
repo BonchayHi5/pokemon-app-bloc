@@ -29,7 +29,7 @@ class HomeDetailScreen extends StatelessWidget {
             listener: (context, state) {
               if(state is FilterFavoriteLoaded) {
                 final filterFavBloc = context.read<FilterFavoriteBloc>();
-                if(filterFavBloc.getfavouriteBreeds.contains(pokemon)){
+                if(filterFavBloc.getfavouritePoke.contains(pokemon)){
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("Added to Favorites"),

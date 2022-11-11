@@ -26,7 +26,7 @@ class App extends StatelessWidget {
           create: (BuildContext context) => SearchPokemonBloc(),
         ),
         BlocProvider<FilterFavoriteBloc>(
-          create: (BuildContext context) => FilterFavoriteBloc(),
+          create: (BuildContext context) => FilterFavoriteBloc()
         ),
         BlocProvider<ThemeCubit>(
           create: (BuildContext context) => ThemeCubit(),

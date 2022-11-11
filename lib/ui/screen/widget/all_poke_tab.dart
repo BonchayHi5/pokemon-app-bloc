@@ -25,6 +25,7 @@ class AllPokeTab extends StatelessWidget {
           );
         }
         if (state is PokemonBlocSuccessState) {
+          print("ui filter length ${state.filterPokemonList}");
           return Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
             child: GridView.builder(
@@ -34,9 +35,9 @@ class AllPokeTab extends StatelessWidget {
                   crossAxisSpacing: 12,
                   childAspectRatio: 1.2,
                 ),
-                itemCount: state.pokemonList.length,
-                itemBuilder: (BuildContext ctx, index) {
-                  final pokemon = state.pokemonList[index];
+                itemCount: state.isFilterFav ? state.filterPokemonList.length : state.pokemonList.length,
+                itemBuilder: (BuildContext ctx, index) {         
+                  final pokemon =  state.pokemonList[index];
                   return PokemonCard(pokemon: pokemon);
                 }),
           );
