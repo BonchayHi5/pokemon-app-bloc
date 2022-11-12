@@ -19,7 +19,6 @@ class PokemonSearchDelegate extends SearchDelegate {
         child: IconButton(
           icon: const Icon(
             Icons.clear,
-            // color: Colors.black,
           ),
           onPressed: () {
             query = '';

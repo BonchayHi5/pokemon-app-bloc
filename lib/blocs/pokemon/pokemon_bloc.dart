@@ -12,6 +12,7 @@ class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
   PokemonBloc() : super(PokemonBlocInitialState()) {
     on<FetchPokemonEvent>(_onFetchPoke);
     on<AddFilterPokeTypeEvent>(_onAddFilterPokeType);
+    on<RemoveFilterPokeTypeEvent>(_onRemoveFilterPokeType);
     on<ClearFilterPokemonByTypeEvent>(_onClearFilterPokeByType);
   }
 
@@ -47,7 +48,7 @@ class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
       List<String> filterTypes = [];     
       ///add new filterType  
       if(!state.filterTypes.contains(event.pokemonType.toString().toLowerCase())) {
-        print("not contain");
+        print("not contain add");
         filterTypes = List.from(state.filterTypes)..add(event.pokemonType.toString().toLowerCase());
       }
       //_getfilterPokeList(filterTypes, state.pokemonList);
@@ -55,6 +56,29 @@ class PokemonBloc extends Bloc<PokemonBlocEvent, PokemonBlocState> {
       emit(
         PokemonBlocSuccessState( 
           filterTypes: filterTypes.isEmpty ? state.filterTypes : filterTypes,  
+          pokemonList: state.pokemonList,
+          allType: state.allType,
+          filterPokemonList: _getfilterPokeList(filterTypes, state.pokemonList)
+        ),
+      );
+    }
+  }
+
+  void _onRemoveFilterPokeType(event, emit) async {
+    final state = this.state;
+    if(state is PokemonBlocSuccessState) {   
+      List<String> filterTypes = [];     
+      ///add new filterType  
+      if(state.filterTypes.contains(event.pokemonType.toString().toLowerCase())) {
+        print("not contain remove");
+        filterTypes = List.from(state.filterTypes)..remove(event.pokemonType.toString().toLowerCase());
+        print("isEmpty: ${filterTypes.isEmpty}");
+      }
+
+      emit(PokemonBlocLoadingState());
+      emit(
+        PokemonBlocSuccessState( 
+          filterTypes: filterTypes,  
           pokemonList: state.pokemonList,
           allType: state.allType,
           filterPokemonList: _getfilterPokeList(filterTypes, state.pokemonList)

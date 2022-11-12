@@ -14,6 +14,10 @@ class AddFilterPokeTypeEvent extends PokemonBlocEvent {
   final String pokemonType;
   const AddFilterPokeTypeEvent(this.pokemonType);
 }
+class RemoveFilterPokeTypeEvent extends PokemonBlocEvent {
+  final String pokemonType;
+  const RemoveFilterPokeTypeEvent(this.pokemonType);
+}
 class ClearFilterPokemonByTypeEvent extends PokemonBlocEvent {}
 
 

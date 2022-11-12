@@ -112,29 +112,47 @@ class FilterButton extends StatelessWidget {
                           const SizedBox(height: 8),
                           Wrap(
                             children: List.generate(state.filterTypes.length, (index) {
-                              return Padding(
-                                  padding: const EdgeInsets.only(bottom: 0),
-                                  child: Container(
-                                    margin: const EdgeInsets.only(bottom: 6,right: 8),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 14,
-                                      vertical: 6,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: AppUtils.toPokemonTypeColor(
+                              return GestureDetector(
+                                onTap: () {
+                                  if(state.filterTypes.contains(state.filterTypes[index].toLowerCase())) {
+                                    context.read<PokemonBloc>().add(RemoveFilterPokeTypeEvent(state.filterTypes[index]));
+                                  }
+                                },
+                                child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 0),
+                                    child: Container(
+                                      margin: const EdgeInsets.only(bottom: 6,right: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 14,
+                                        vertical: 6,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: AppUtils.toPokemonTypeColor(
                                           type: state.filterTypes[index]
                                         ),
-                                      borderRadius: BorderRadius.circular(32)
-                                    ),
-                                    child: Text(
-                                      state.filterTypes[index].toUpperCase(),
-                                      style: const TextStyle(
-                                        fontSize: 12, 
-                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(32)
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            state.filterTypes[index].toUpperCase(),
+                                            style: const TextStyle(
+                                              fontSize: 12, 
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          const Icon(
+                                            Icons.clear,
+                                            color: Colors.white,
+                                            size: 18,
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
-                                );
+                              );
                               } 
                             ),
                           ),

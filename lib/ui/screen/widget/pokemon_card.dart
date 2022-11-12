@@ -47,9 +47,6 @@ class PokemonCard extends StatelessWidget {
                       return  GestureDetector(
                         onTap: () {
                           final favBloc = context.read<FilterFavoriteBloc>();
-                          // final pokeBloc = context.read<PokemonBloc>();
-                          // pokeBloc.add(UpdatePokemonEvent(pokemon: pokemon));
-                          // pokeBloc.add(FilterFavPokemonEvent());
                           favBloc.add(UpdateFilterFavorite(pokemon: pokemon));
                         },
                         child: state.pokemonList.contains(pokemon) 
