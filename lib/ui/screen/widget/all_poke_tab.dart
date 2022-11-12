@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_app/blocs/pokemon/pokemon_bloc.dart';
 import 'package:pokemon_app/ui/screen/widget/pokemon_card.dart';
 
-
 class AllPokeTab extends StatelessWidget {
   const AllPokeTab({super.key});
 
@@ -25,7 +24,6 @@ class AllPokeTab extends StatelessWidget {
           );
         }
         if (state is PokemonBlocSuccessState) {
-          print("ui filter length ${state.filterPokemonList}");
           return Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
             child: GridView.builder(
@@ -35,9 +33,11 @@ class AllPokeTab extends StatelessWidget {
                   crossAxisSpacing: 12,
                   childAspectRatio: 1.2,
                 ),
-                itemCount: state.isFilterFav ? state.filterPokemonList.length : state.pokemonList.length,
-                itemBuilder: (BuildContext ctx, index) {         
-                  final pokemon =  state.pokemonList[index];
+                itemCount: state.filterTypes.isNotEmpty
+                    ? state.filterPokemonList.length
+                    : state.pokemonList.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  final pokemon = state.filterTypes.isEmpty ? state.pokemonList[index] : state.filterPokemonList[index];
                   return PokemonCard(pokemon: pokemon);
                 }),
           );

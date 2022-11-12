@@ -11,14 +11,19 @@ abstract class PokemonBlocState extends Equatable {
 class PokemonBlocInitialState extends PokemonBlocState {}
 class PokemonBlocLoadingState extends PokemonBlocState {}
 class PokemonBlocSuccessState extends PokemonBlocState {
-  bool isFilterFav;
+  final List<String> filterTypes;
   final List<PokemonModel> pokemonList;
-  List<PokemonModel> filterPokemonList;
-  PokemonBlocSuccessState({
-    this.isFilterFav = false,
+  final List<String> allType;
+  final List<PokemonModel> filterPokemonList;
+  const PokemonBlocSuccessState({
+    required this.filterTypes,
     required this.pokemonList,
+    required this.allType,
     required this.filterPokemonList,
   });
+
+  @override
+  List<Object> get props => [filterTypes,pokemonList,allType,filterPokemonList];
 }
 
 class PokemonBlocErrorState extends PokemonBlocState {

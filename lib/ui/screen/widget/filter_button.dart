@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokemon_app/blocs/pokemon/pokemon_bloc.dart';
+import 'package:pokemon_app/utils/app_utils.dart';
 
 
 class FilterButton extends StatelessWidget {
@@ -9,18 +10,14 @@ class FilterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PokemonBloc,PokemonBlocState>(
-      builder: (context,state) {
-        bool isFilter = false;
-        if(state is PokemonBlocSuccessState) {
-          isFilter = state.isFilterFav;
-        }
+      builder: (context,state) {    
         return GestureDetector(
         onTap: () {
           _showBottomSheet(context);
         },
-        child:  Icon(
+        child:  const Icon(
            Icons.filter_list,
-           color: isFilter ? Colors.green : Colors.black,
+           color: Colors.black,
           ),
         );
       },
@@ -32,64 +29,118 @@ class FilterButton extends StatelessWidget {
       context: context,
       builder: ((context) {     
         return SizedBox(
-          height: 140,
+          height: MediaQuery.of(context).size.height,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Align(
-                  child: Text(
-                    "Filter",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ),
                 BlocBuilder<PokemonBloc,PokemonBlocState>(
                   builder: (context,state) {
-                    bool isFilter = false;
                     if(state is PokemonBlocSuccessState) {
-                      isFilter = state.isFilterFav;
-                    }
-                    return GestureDetector(
-                      onTap: () {
-                        if(state is PokemonBlocSuccessState) {
-                          final filterFavBloc = context.read<PokemonBloc>();
-                          filterFavBloc.add(FilterFavPokemonClickedEvent());
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
+                      return Column(
+                        children: [
+                          const Align(
+                          child: Text(
+                            "Filter Options",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
                         ),
-                        decoration: BoxDecoration(
-                          color: isFilter? Colors.green : Colors.grey[200],
-                          borderRadius: BorderRadius.circular(16)
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              "Favorite",
+                        const SizedBox(height: 16),
+                           Wrap(
+                            children: List.generate(state.allType.length, (index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  context.read<PokemonBloc>().add(AddFilterPokeTypeEvent(state.allType[index]));
+                                  // context.read<PokemonBloc>().add(FilterPokemonByTypeEvent());
+                                },
+                                child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 0),
+                                    child: Container(
+                                      margin: const EdgeInsets.only(bottom: 6,right: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 14,
+                                        vertical: 6,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: AppUtils.toPokemonTypeColor(
+                                            type: state.allType[index]
+                                          ),
+                                        borderRadius: BorderRadius.circular(32)
+                                      ),
+                                      child: Text(
+                                        state.allType[index],
+                                        style: const TextStyle(
+                                          fontSize: 12, 
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              );
+                              } 
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          const Align(
+                            child: Text(
+                              "Filtered Options",
                               style: TextStyle(
-                                color: isFilter 
-                                    ? Colors.white 
-                                    : Colors.black
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold
                               ),
                             ),
-                            if(isFilter) const Icon(
-                              Icons.check,
-                              color: Colors.white,
+                          ),
+                          const SizedBox(height: 16),
+                          if(state.filterTypes.isNotEmpty)
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: () {
+                                context.read<PokemonBloc>().add(ClearFilterPokemonByTypeEvent());
+                              },
+                              child: const Text(
+                                "Clear",
+                                style: TextStyle(color: Colors.red),
+                              ),
                             ),
-                          ],
-                        )
-                      ),
-                    );
+                          ),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            children: List.generate(state.filterTypes.length, (index) {
+                              return Padding(
+                                  padding: const EdgeInsets.only(bottom: 0),
+                                  child: Container(
+                                    margin: const EdgeInsets.only(bottom: 6,right: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 14,
+                                      vertical: 6,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: AppUtils.toPokemonTypeColor(
+                                          type: state.filterTypes[index]
+                                        ),
+                                      borderRadius: BorderRadius.circular(32)
+                                    ),
+                                    child: Text(
+                                      state.filterTypes[index],
+                                      style: const TextStyle(
+                                        fontSize: 12, 
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              } 
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                    return Container();
                   },
                 )
               ],
