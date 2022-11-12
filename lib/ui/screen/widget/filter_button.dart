@@ -110,15 +110,22 @@ class FilterButton extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          Wrap(
-                            children: List.generate(state.filterTypes.length, (index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  if(state.filterTypes.contains(state.filterTypes[index].toLowerCase())) {
-                                    context.read<PokemonBloc>().add(RemoveFilterPokeTypeEvent(state.filterTypes[index]));
-                                  }
-                                },
-                                child: Padding(
+                          state.filterTypes.isEmpty 
+                            ? const Center(
+                                child: Text(
+                                  "Filter is Empty. Please add filter options!!",
+                                  style: TextStyle(fontSize: 12),
+                                )
+                              )
+                            : Wrap(
+                              children: List.generate(state.filterTypes.length, (index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    if(state.filterTypes.contains(state.filterTypes[index].toLowerCase())) {
+                                      context.read<PokemonBloc>().add(RemoveFilterPokeTypeEvent(state.filterTypes[index]));
+                                    }
+                                  },
+                                  child: Padding(
                                     padding: const EdgeInsets.only(bottom: 0),
                                     child: Container(
                                       margin: const EdgeInsets.only(bottom: 6,right: 8),
@@ -152,7 +159,7 @@ class FilterButton extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                              );
+                                );
                               } 
                             ),
                           ),
