@@ -54,8 +54,9 @@ class FilterButton extends StatelessWidget {
                             children: List.generate(state.allType.length, (index) {
                               return GestureDetector(
                                 onTap: () {
-                                  context.read<PokemonBloc>().add(AddFilterPokeTypeEvent(state.allType[index]));
-                                  // context.read<PokemonBloc>().add(FilterPokemonByTypeEvent());
+                                  if(!state.filterTypes.contains(state.allType[index].toLowerCase())) {
+                                    context.read<PokemonBloc>().add(AddFilterPokeTypeEvent(state.allType[index]));
+                                  }
                                 },
                                 child: Padding(
                                     padding: const EdgeInsets.only(bottom: 0),
@@ -72,7 +73,7 @@ class FilterButton extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(32)
                                       ),
                                       child: Text(
-                                        state.allType[index],
+                                        state.allType[index].toUpperCase(),
                                         style: const TextStyle(
                                           fontSize: 12, 
                                           color: Colors.white,
@@ -126,7 +127,7 @@ class FilterButton extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(32)
                                     ),
                                     child: Text(
-                                      state.filterTypes[index],
+                                      state.filterTypes[index].toUpperCase(),
                                       style: const TextStyle(
                                         fontSize: 12, 
                                         color: Colors.white,
