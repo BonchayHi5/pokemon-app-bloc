@@ -7,6 +7,7 @@ import 'package:pokemon_app/blocs/pokemon/pokemon_bloc.dart';
 import 'package:pokemon_app/blocs/search_pokemon/search_pokemon_bloc.dart';
 import 'package:pokemon_app/service/app_localizations.dart';
 import 'package:pokemon_app/ui/screen/home_screen.dart';
+import 'package:pokemon_app/ui/screen/spin_wheel.dart';
 
 import 'blocs/locale/locale_cubit.dart';
 
@@ -26,8 +27,7 @@ class App extends StatelessWidget {
           create: (BuildContext context) => SearchPokemonBloc(),
         ),
         BlocProvider<FilterFavoriteBloc>(
-          create: (BuildContext context) => FilterFavoriteBloc()
-        ),
+            create: (BuildContext context) => FilterFavoriteBloc()),
         BlocProvider<ThemeCubit>(
           create: (BuildContext context) => ThemeCubit(),
         ),
@@ -40,18 +40,21 @@ class App extends StatelessWidget {
           return BlocBuilder<LocaleCubit, ChangeLocaleState>(
             builder: (context, localeState) {
               return MaterialApp(
-                locale: localeState.locale,
-                supportedLocales: const [Locale('en'), Locale('km')],
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate
-                ],
-                title: 'Pokemon App',
-                theme: state,
-                home: const HomeScreen(),
-              );
+                  locale: localeState.locale,
+                  supportedLocales: const [Locale('en'), Locale('km')],
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate
+                  ],
+                  title: 'Pokemon App',
+                  theme: state,
+                  home: const SpinWheel(
+                    resultNumber: 23,
+                    isRollToResult: true,
+                  ) //const HomeScreen(),
+                  );
             },
           );
         },
